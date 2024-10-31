@@ -5,17 +5,75 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Countdown Timer</title>
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; padding: 50px; }
-        #countdown { font-size: 2em; color: #333; }
+        /* General styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f2f2f2; /* Light gray background */
+            color: #333; /* Dark gray text */
+            text-align: center;
+        }
+
+        /* Timer container */
+        .container {
+            max-width: 400px;
+            background-color: #ffffff; /* White container */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Header styling */
+        h1 {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            color: #333; /* Dark gray */
+        }
+
+        /* Countdown display */
+        #countdown {
+            display: flex;
+            justify-content: space-around;
+            font-size: 2em;
+            font-weight: bold;
+        }
+
+        /* Styling for each time unit */
+        .time-unit {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 10px;
+            color: #333; /* Dark gray for numbers */
+        }
+
+        /* Label styling */
+        .label {
+            font-size: 0.8em;
+            color: #ff6f00; /* Avalara's orange for labels */
+        }
     </style>
 </head>
 <body>
-    <h1>Countdown to December 13, 2024, 1:30 PM ET</h1>
-    <div id="countdown"></div>
+    <div class="container">
+        <h1>Countdown to December 13, 2024, 1:30 PM ET</h1>
+        <div id="countdown">
+            <div class="time-unit"><span id="days">0</span><br><span class="label">Days</span></div>
+            <div class="time-unit"><span id="hours">0</span><br><span class="label">Hours</span></div>
+            <div class="time-unit"><span id="minutes">0</span><br><span class="label">Minutes</span></div>
+            <div class="time-unit"><span id="seconds">0</span><br><span class="label">Seconds</span></div>
+        </div>
+    </div>
+
     <script>
-        // Set the target date and time in UTC to account for Eastern Time (ET)
+        // Set the target date and time in UTC
         const countdownDate = new Date("2024-12-13T18:30:00Z").getTime();
 
+        // Countdown function
         const countdownFunction = setInterval(function() {
             const now = new Date().getTime();
             const distance = countdownDate - now;
@@ -25,8 +83,10 @@
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            document.getElementById("countdown").innerHTML = 
-                days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+            document.getElementById("days").innerText = days;
+            document.getElementById("hours").innerText = hours;
+            document.getElementById("minutes").innerText = minutes;
+            document.getElementById("seconds").innerText = seconds;
 
             if (distance < 0) {
                 clearInterval(countdownFunction);
