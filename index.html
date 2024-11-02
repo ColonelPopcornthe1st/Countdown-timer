@@ -4,24 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Countdown Timer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
         /* General styling */
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Roboto', sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
-            background-color: #f2f2f2; /* Light gray background */
-            color: #333; /* Dark gray text */
+            background: linear-gradient(135deg, #ffffff, #f2f2f2); /* Gradient background */
+            color: #333;
             text-align: center;
         }
 
         /* Timer container */
         .container {
             max-width: 400px;
-            background-color: #ffffff; /* White container */
+            background-color: #ffffff;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -31,7 +32,7 @@
         h1 {
             font-size: 1.5em;
             margin-bottom: 20px;
-            color: #333; /* Dark gray */
+            color: #333;
         }
 
         /* Countdown display */
@@ -40,6 +41,7 @@
             justify-content: space-around;
             font-size: 2em;
             font-weight: bold;
+            transition: transform 0.2s ease-in-out; /* Subtle animation */
         }
 
         /* Styling for each time unit */
@@ -48,13 +50,37 @@
             flex-direction: column;
             align-items: center;
             margin: 10px;
-            color: #333; /* Dark gray for numbers */
+            color: #333;
         }
 
         /* Label styling */
         .label {
             font-size: 0.8em;
             color: #ff6f00; /* Avalara's orange for labels */
+        }
+
+        /* Progress bar */
+        .progress-bar {
+            width: 100%;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+
+        .progress-bar-fill {
+            height: 10px;
+            background-color: #ff6f00;
+            width: 0%;
+            transition: width 1s linear;
+        }
+
+        /* Responsive design */
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+                font-size: 1.5em;
+            }
         }
     </style>
 </head>
@@ -67,17 +93,18 @@
             <div class="time-unit"><span id="minutes">0</span><br><span class="label">Minutes</span></div>
             <div class="time-unit"><span id="seconds">0</span><br><span class="label">Seconds</span></div>
         </div>
+        <div class="progress-bar">
+            <div id="progress-fill" class="progress-bar-fill"></div>
+        </div>
     </div>
 
     <script>
-        // Set the target date and time in UTC
         const countdownDate = new Date("2024-12-13T18:30:00Z").getTime();
+        const totalDuration = countdownDate - new Date().getTime(); // Calculate total time duration
 
-        // Countdown function
         const countdownFunction = setInterval(function() {
             const now = new Date().getTime();
             const distance = countdownDate - now;
-
             const days = Math.floor(distance / (1000 * 60 * 60 * 24));
             const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
@@ -88,9 +115,15 @@
             document.getElementById("minutes").innerText = minutes;
             document.getElementById("seconds").innerText = seconds;
 
+            // Update progress bar
+            const progressFill = document.getElementById("progress-fill");
+            const progressPercentage = ((totalDuration - distance) / totalDuration) * 100;
+            progressFill.style.width = progressPercentage + "%";
+
             if (distance < 0) {
                 clearInterval(countdownFunction);
                 document.getElementById("countdown").innerHTML = "EXPIRED";
+                progressFill.style.width = "100%";
             }
         }, 1000);
     </script>
