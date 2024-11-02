@@ -28,6 +28,7 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             overflow: hidden;
             border: 1px solid #ccc; /* Subtle border */
+            position: relative;
         }
 
         /* Title bar styling */
@@ -104,55 +105,32 @@
             color: #ff6f00; /* Avalara's orange for labels */
         }
 
-        /* Hourglass container */
-        .hourglass {
-            margin-top: 20px;
+        /* Dumbbell animation styling */
+        .dumbbell {
+            width: 50px;
+            height: 20px;
+            background-color: #333;
+            border-radius: 5px;
+            position: absolute;
+            bottom: 10px;
+            left: -60px;
+            animation: roll 10s linear infinite;
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
         }
 
-        .glass {
-            width: 50px;
-            height: 100px;
-            position: relative;
-            border: 2px solid #333;
-            border-radius: 25px;
-            overflow: hidden;
-            clip-path: polygon(50% 0%, 60% 10%, 70% 20%, 60% 30%, 50% 40%, 40% 30%, 30% 20%, 40% 10%, 50% 0%, 50% 100%, 40% 90%, 30% 80%, 40% 70%, 50% 60%, 60% 70%, 70% 80%, 60% 90%, 50% 100%);
+        .weight {
+            width: 15px;
+            height: 15px;
+            background-color: #555;
+            border-radius: 50%;
         }
 
-        .sand-top, .sand-bottom {
-            background-color: #ff6f00;
-            position: absolute;
-            width: 100%;
-            transition: height 1s linear;
-        }
-
-        .sand-top {
-            height: 50%;
-            top: 0;
-        }
-
-        .sand-bottom {
-            height: 0;
-            bottom: 0;
-        }
-
-        .falling-sand {
-            width: 4px;
-            height: 10px;
-            background-color: #ff6f00;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            animation: fall 1s linear infinite;
-            transform: translate(-50%, -50%);
-        }
-
-        @keyframes fall {
-            0% { top: 50%; opacity: 1; }
-            100% { top: 100%; opacity: 0; }
+        @keyframes roll {
+            0% { left: -60px; transform: rotate(0deg); }
+            50% { transform: rotate(180deg); }
+            100% { left: 100%; transform: rotate(360deg); }
         }
     </style>
 </head>
@@ -174,12 +152,9 @@
                 <div class="time-unit"><span id="minutes">0</span><br><span class="label">Minutes</span></div>
                 <div class="time-unit"><span id="seconds">0</span><br><span class="label">Seconds</span></div>
             </div>
-            <div class="hourglass">
-                <div class="glass">
-                    <div class="sand-top" id="sandTop"></div>
-                    <div class="sand-bottom" id="sandBottom"></div>
-                    <div class="falling-sand"></div>
-                </div>
+            <div class="dumbbell">
+                <div class="weight"></div>
+                <div class="weight"></div>
             </div>
         </div>
     </div>
@@ -203,22 +178,11 @@
             document.getElementById("minutes").innerText = minutes;
             document.getElementById("seconds").innerText = seconds;
 
-            // Simulate sand falling and accumulating
-            const sandTop = document.getElementById("sandTop");
-            const sandBottom = document.getElementById("sandBottom");
-            const totalDuration = countdownDate - (countdownDate - distance);
-            const elapsed = totalDuration - distance;
-            const percentageElapsed = Math.min((elapsed / totalDuration) * 100, 100);
-            
-            sandTop.style.height = (50 - (percentageElapsed / 2)) + '%';
-            sandBottom.style.height = (percentageElapsed / 2) + '%';
-
             if (distance < 0) {
                 clearInterval(countdownFunction);
                 document.getElementById("countdown").innerHTML = "EXPIRED";
-                sandTop.style.height = '0%';
-                sandBottom.style.height = '50%';
             }
         }, 1000);
     </script>
 </body>
+</html>
