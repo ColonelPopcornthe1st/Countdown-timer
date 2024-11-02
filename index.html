@@ -18,13 +18,58 @@
             text-align: center;
         }
 
-        /* Timer container */
-        .container {
-            max-width: 400px;
-            background-color: #ffffff; /* White container */
-            padding: 20px;
+        /* MacOS window styling */
+        .window {
+            width: 450px;
+            background-color: #ffffff; /* White background */
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            border: 1px solid #ccc; /* Subtle border */
+        }
+
+        /* Title bar styling */
+        .title-bar {
+            display: flex;
+            align-items: center;
+            background-color: #e0e0e0; /* Light gray for title bar */
+            padding: 5px 10px;
+        }
+
+        .title-bar-buttons {
+            display: flex;
+            gap: 5px;
+        }
+
+        .button {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .close {
+            background-color: #ff5f56; /* Red */
+        }
+
+        .minimize {
+            background-color: #ffbd2e; /* Yellow */
+        }
+
+        .maximize {
+            background-color: #27c93f; /* Green */
+        }
+
+        .title-text {
+            flex-grow: 1;
+            text-align: center;
+            font-size: 14px;
+            color: #333;
+        }
+
+        /* Timer container */
+        .container {
+            padding: 20px;
         }
 
         /* Header styling */
@@ -59,13 +104,23 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Countdown to December 13, 2024, 1:30 PM ET</h1>
-        <div id="countdown">
-            <div class="time-unit"><span id="days">0</span><br><span class="label">Days</span></div>
-            <div class="time-unit"><span id="hours">0</span><br><span class="label">Hours</span></div>
-            <div class="time-unit"><span id="minutes">0</span><br><span class="label">Minutes</span></div>
-            <div class="time-unit"><span id="seconds">0</span><br><span class="label">Seconds</span></div>
+    <div class="window">
+        <div class="title-bar">
+            <div class="title-bar-buttons">
+                <div class="button close"></div>
+                <div class="button minimize"></div>
+                <div class="button maximize"></div>
+            </div>
+            <div class="title-text">Countdown Timer</div>
+        </div>
+        <div class="container">
+            <h1>Countdown to December 13, 2024, 1:30 PM ET</h1>
+            <div id="countdown">
+                <div class="time-unit"><span id="days">0</span><br><span class="label">Days</span></div>
+                <div class="time-unit"><span id="hours">0</span><br><span class="label">Hours</span></div>
+                <div class="time-unit"><span id="minutes">0</span><br><span class="label">Minutes</span></div>
+                <div class="time-unit"><span id="seconds">0</span><br><span class="label">Seconds</span></div>
+            </div>
         </div>
     </div>
 
