@@ -103,6 +103,56 @@
             font-size: 0.8em;
             color: #ff6f00; /* Avalara's orange for labels */
         }
+
+        /* Hourglass container */
+        .hourglass {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .glass {
+            width: 50px;
+            height: 100px;
+            position: relative;
+            border: 2px solid #333;
+            border-radius: 25px;
+            overflow: hidden;
+        }
+
+        .sand-top, .sand-bottom {
+            background-color: #ff6f00;
+            position: absolute;
+            width: 100%;
+            transition: height 1s linear;
+        }
+
+        .sand-top {
+            height: 50%;
+            top: 0;
+        }
+
+        .sand-bottom {
+            height: 0;
+            bottom: 0;
+        }
+
+        .falling-sand {
+            width: 4px;
+            height: 10px;
+            background-color: #ff6f00;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            animation: fall 1s linear infinite;
+            transform: translate(-50%, -50%);
+        }
+
+        @keyframes fall {
+            0% { top: 50%; opacity: 1; }
+            100% { top: 100%; opacity: 0; }
+        }
     </style>
 </head>
 <body>
@@ -122,6 +172,13 @@
                 <div class="time-unit"><span id="hours">0</span><br><span class="label">Hours</span></div>
                 <div class="time-unit"><span id="minutes">0</span><br><span class="label">Minutes</span></div>
                 <div class="time-unit"><span id="seconds">0</span><br><span class="label">Seconds</span></div>
+            </div>
+            <div class="hourglass">
+                <div class="glass">
+                    <div class="sand-top" id="sandTop"></div>
+                    <div class="sand-bottom" id="sandBottom"></div>
+                    <div class="falling-sand"></div>
+                </div>
             </div>
         </div>
     </div>
@@ -145,9 +202,21 @@
             document.getElementById("minutes").innerText = minutes;
             document.getElementById("seconds").innerText = seconds;
 
+            // Simulate sand falling
+            const sandTop = document.getElementById("sandTop");
+            const sandBottom = document.getElementById("sandBottom");
+            const totalDuration = countdownDate - (countdownDate - distance);
+            const elapsed = totalDuration - distance;
+            const percentageElapsed = Math.min((elapsed / totalDuration) * 100, 100);
+            
+            sandTop.style.height = (50 - (percentageElapsed / 2)) + '%';
+            sandBottom.style.height = (percentageElapsed / 2) + '%';
+
             if (distance < 0) {
                 clearInterval(countdownFunction);
                 document.getElementById("countdown").innerHTML = "EXPIRED";
+                sandTop.style.height = '0%';
+                sandBottom.style.height = '50%';
             }
         }, 1000);
     </script>
