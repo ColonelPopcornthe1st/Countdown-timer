@@ -104,34 +104,6 @@
             font-size: 0.8em;
             color: #ff6f00; /* Avalara's orange for labels */
         }
-
-        /* Dumbbell animation styling */
-        .dumbbell {
-            width: 50px;
-            height: 20px;
-            background-color: #333;
-            border-radius: 5px;
-            position: absolute;
-            bottom: 10px;
-            left: -60px;
-            animation: roll 10s linear infinite;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .weight {
-            width: 15px;
-            height: 15px;
-            background-color: #555;
-            border-radius: 50%;
-        }
-
-        @keyframes roll {
-            0% { left: -60px; transform: rotate(0deg); }
-            50% { transform: rotate(180deg); }
-            100% { left: 100%; transform: rotate(360deg); }
-        }
     </style>
 </head>
 <body>
@@ -151,10 +123,6 @@
                 <div class="time-unit"><span id="hours">0</span><br><span class="label">Hours</span></div>
                 <div class="time-unit"><span id="minutes">0</span><br><span class="label">Minutes</span></div>
                 <div class="time-unit"><span id="seconds">0</span><br><span class="label">Seconds</span></div>
-            </div>
-            <div class="dumbbell">
-                <div class="weight"></div>
-                <div class="weight"></div>
             </div>
         </div>
     </div>
